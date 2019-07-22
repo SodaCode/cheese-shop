@@ -5,18 +5,16 @@ const express = require("express"),
   mongoose = require("mongoose"),
   passport = require("passport"),
   methodOverride = require("method-override"),
-  LocalStrategy = require("passport-local"),
-  User = require("./models/users");
+  LocalStrategy = require("passport-local");
+//   User = require("./models/users")
 
-const app = express();
-
-mongoose
-  .connect(process.env.DATABASEURL, () => {
-    console.log("Connected to DB");
-  })
-  .catch(err => {
-    console.log("Error:" + err.message);
-  });
+// mongoose
+//   .connect(process.env.DATABASEURL, () => {
+//     console.log("Connected to DB");
+//   })
+//   .catch(err => {
+//     console.log("Error:" + err.message);
+//   });
 
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
