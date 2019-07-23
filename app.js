@@ -6,6 +6,8 @@ const express = require("express"),
   passport = require("passport"),
   methodOverride = require("method-override"),
   LocalStrategy = require("passport-local"),
+  Cheese = require("./models/cheeses"),
+  Comment = require("./models/comments"),
   User = require("./models/users");
 
 mongoose
@@ -19,6 +21,14 @@ mongoose
     console.log("Error:" + err.message);
   });
 
+let cheeses = [
+  {
+    name: "Swiss",
+    image:
+      "http://cdn.shopify.com/s/files/1/0150/0232/products/Pearl_Valley_Swiss_Slices_36762caf-0757-45d2-91f0-424bcacc9892_grande.jpg?v=1534871055"
+  }
+];
+
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname + "/public"));
@@ -30,7 +40,20 @@ app.get("/", (req, res) => {
 });
 
 app.get("/catalogue", (req, res) => {
-  res.render("catalogue");
+  res.render("catalogue", { cheeses: cheeses });
+});
+
+app.post("/catalogue", (req, res) => {
+  let name = req.body.name;
+  let image = req.body.image;
+  let newCheese = { name: name, image: image };
+  cheeses.push(newCheese);
+  //redirect back to catalogue
+  res.redirect("/catalogue");
+});
+
+app.get("/catalogue/new", (req, res) => {
+  res.render("new.ejs");
 });
 
 app.get("/login", (req, res) => {

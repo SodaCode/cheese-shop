@@ -1,9 +1,14 @@
 <% include ./partials/header %>
 
-<div class="container">
-  <div class="row">
-    <h1>This is the catalogue</h1>
+<h1>This is the catalogue</h1>
+
+<% cheeses.forEach((cheese) => { %>
+<div>
+  <h4>
+    <%= cheese.name %>
+  </h4>
+  <div>
+    <img src="<%= cheese.image %>" alt="swiss" />
   </div>
 </div>
-
-<% include ./partials/footer %>
+<% }); %> <% include ./partials/footer %>
