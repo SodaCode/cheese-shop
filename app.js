@@ -5,16 +5,19 @@ const express = require("express"),
   mongoose = require("mongoose"),
   passport = require("passport"),
   methodOverride = require("method-override"),
-  LocalStrategy = require("passport-local");
-//   User = require("./models/users")
+  LocalStrategy = require("passport-local"),
+  User = require("./models/users");
 
-// mongoose
-//   .connect(process.env.DATABASEURL, () => {
-//     console.log("Connected to DB");
-//   })
-//   .catch(err => {
-//     console.log("Error:" + err.message);
-//   });
+mongoose
+  .connect(
+    "mongodb+srv://SodaCode:!Kdh4lyfe@cheese-shop-31dcw.mongodb.net/test?retryWrites=true&w=majority",
+    () => {
+      console.log("Connected to DB");
+    }
+  )
+  .catch(err => {
+    console.log("Error:" + err.message);
+  });
 
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
