@@ -40,7 +40,13 @@ app.get("/", (req, res) => {
 });
 
 app.get("/catalogue", (req, res) => {
-  res.render("catalogue", { cheeses: cheeses });
+  Cheese.find({}, (err, allCheeses) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.render("catalogue", { cheeses: allCheeses });
+    }
+  });
 });
 
 app.post("/catalogue", (req, res) => {
