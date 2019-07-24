@@ -21,14 +21,6 @@ mongoose
     console.log("Error:" + err.message);
   });
 
-let cheeses = [
-  {
-    name: "Swiss",
-    image:
-      "http://cdn.shopify.com/s/files/1/0150/0232/products/Pearl_Valley_Swiss_Slices_36762caf-0757-45d2-91f0-424bcacc9892_grande.jpg?v=1534871055"
-  }
-];
-
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname + "/public"));
@@ -53,9 +45,15 @@ app.post("/catalogue", (req, res) => {
   let name = req.body.name;
   let image = req.body.image;
   let newCheese = { name: name, image: image };
-  cheeses.push(newCheese);
-  //redirect back to catalogue
-  res.redirect("/catalogue");
+  //Make a new cheese and save to db
+  Cheese.create(newCheese, (err, newlyCreated) => {
+    if (err) {
+      console.log(err);
+    } else {
+      //redirect back to catalogue
+      res.redirect("/catalogue");
+    }
+  });
 });
 
 app.get("/catalogue/new", (req, res) => {
@@ -66,9 +64,41 @@ app.get("/login", (req, res) => {
   res.render("login");
 });
 
+//handle login logic
+// app.post(
+//   "/login",
+//   //   passport.authenticate("local", {
+//   //     successRedirect: "/landing",
+//   //     failureRedirect: "/login"
+//   //   }),
+//   (req, res) => {}
+// );
+
+//logout route
+// app.get("/logout", (req, res) => {
+//   req.logout();
+//   // req.flash("success", "Logout Successful");
+//   res.redirect("/landing");
+// });
+
 app.get("/register", (req, res) => {
   res.render("register");
 });
+
+//Handle sign up logic
+// app.post("/register", (req, res) => {
+//   let newUser = new User({ username: req.body.username });
+//   User.register(newUser, req.body.password, (err, user) => {
+//     if (err) {
+//       console.log(err.message);
+//       return res.redirect("/register");
+//     }
+//     passport.authenticate("local")(req, res, () => {
+//       console.log("login successful");
+//       res.redirect("/landing");
+//     });
+//   });
+// });
 
 app.get("/cart", (req, res) => {
   res.render("cart");
