@@ -56,8 +56,13 @@ app.post("/catalogue", (req, res) => {
   });
 });
 
+//So the owner can add more cheese to the catalogue
 app.get("/catalogue/new", (req, res) => {
   res.render("new.ejs");
+});
+
+app.get("/show", (req, res) => {
+  res.render("show");
 });
 
 app.get("/login", (req, res) => {
