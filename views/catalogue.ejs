@@ -2,13 +2,19 @@
 
 <h1>This is the catalogue</h1>
 
-<% cheeses.forEach((cheese) => { %>
-<div>
-  <h4>
-    <%= cheese.name %>
-  </h4>
-  <div>
-    <img src="<%= cheese.image %>" alt="swiss" />
+<div class="container">
+  <div class="row">
+    <% cheeses.forEach((cheese) => { %>
+    <div>
+      <h4>
+        <%= cheese.name %>
+      </h4>
+      <div>
+        <img src="<%= cheese.image %>" alt="<%= cheese.name %>" />
+      </div>
+      <button type="button" class="btn btn-primary"><a style="color: white;" href="/show">Learn More</a></button>
+      <button type="button" class="btn btn-success"><a style="color: white;" href="/show">Add to Cart</a></button>
+    </div>
+    <% }); %> <% include ./partials/footer %>
   </div>
 </div>
-<% }); %> <% include ./partials/footer %>
