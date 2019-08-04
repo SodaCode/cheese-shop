@@ -7,7 +7,6 @@ const express = require("express"),
   methodOverride = require("method-override"),
   LocalStrategy = require("passport-local"),
   Cheese = require("./models/cheeses"),
-  Comment = require("./models/comments"),
   User = require("./models/users");
 
 mongoose
@@ -22,7 +21,9 @@ mongoose
   });
 
 app.set("view engine", "ejs");
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 app.use(express.static(__dirname + "/public"));
 app.use(methodOverride("_method"));
 app.use(flash());
@@ -36,7 +37,9 @@ app.get("/catalogue", (req, res) => {
     if (err) {
       console.log(err);
     } else {
-      res.render("catalogue", { cheeses: allCheeses });
+      res.render("catalogue", {
+        cheeses: allCheeses
+      });
     }
   });
 });
@@ -44,7 +47,10 @@ app.get("/catalogue", (req, res) => {
 app.post("/catalogue", (req, res) => {
   let name = req.body.name;
   let image = req.body.image;
-  let newCheese = { name: name, image: image };
+  let newCheese = {
+    name: name,
+    image: image
+  };
   //Make a new cheese and save to db
   Cheese.create(newCheese, (err, newlyCreated) => {
     if (err) {
@@ -70,40 +76,36 @@ app.get("/login", (req, res) => {
 });
 
 //handle login logic
-// app.post(
-//   "/login",
-//   //   passport.authenticate("local", {
-//   //     successRedirect: "/landing",
-//   //     failureRedirect: "/login"
-//   //   }),
-//   (req, res) => {}
-// );
+app.post("/login", (req, res) => {
+  res.redirect("/landing");
+});
 
-//logout route
-// app.get("/logout", (req, res) => {
-//   req.logout();
-//   // req.flash("success", "Logout Successful");
-//   res.redirect("/landing");
-// });
+// logout route
+app.get("/logout", (req, res) => {
+  req.logout();
+  res.redirect("/landing");
+});
 
 app.get("/register", (req, res) => {
   res.render("register");
 });
 
 //Handle sign up logic
-// app.post("/register", (req, res) => {
-//   let newUser = new User({ username: req.body.username });
-//   User.register(newUser, req.body.password, (err, user) => {
-//     if (err) {
-//       console.log(err.message);
-//       return res.redirect("/register");
-//     }
-//     passport.authenticate("local")(req, res, () => {
-//       console.log("login successful");
-//       res.redirect("/landing");
-//     });
-//   });
-// });
+app.post("/register", (req, res) => {
+  let newUser = new User({
+    username: req.body.username
+  });
+  User.register(newUser, req.body.password, (err, user) => {
+    if (err) {
+      console.log(err.message);
+      return res.redirect("/register");
+    }
+    passport.authenticate("local")(req, res, () => {
+      console.log("login successful");
+      res.redirect("/landing");
+    });
+  });
+});
 
 app.get("/cart", (req, res) => {
   res.render("cart");
