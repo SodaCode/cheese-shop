@@ -44,7 +44,7 @@ app.get("/catalogue", (req, res) => {
   });
 });
 
-app.post("/catalogue", (req, res) => {
+app.post("./catalogue", (req, res) => {
   let name = req.body.name;
   let image = req.body.image;
   let newCheese = {
