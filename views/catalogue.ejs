@@ -1,9 +1,8 @@
 <% include ./partials/header %>
 
-<h1>This is the catalogue</h1>
-
 <div class="container">
   <div class="row">
+    <h1 class="col-sm-12">This is the catalogue</h1>
     <% cheeses.forEach((cheese) => { %>
     <div class="col-md-6 col-sm-12">
       <div class="cheese-container">
@@ -22,4 +21,5 @@
     <% }); %>
   </div>
 </div>
+
 <% include ./partials/footer %>
